@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.usbcommunicator.thomas.bluecommunicator.Startup"
     android:weightSum="1">
+
+    <include
+        android:id="@+id/customToolbar"
+        layout="@layout/customtoolbar"
+        />
 
 
     <TextView
@@ -15,7 +20,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Bluetooth Communication"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|center_vertical"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:textColor="#000000"

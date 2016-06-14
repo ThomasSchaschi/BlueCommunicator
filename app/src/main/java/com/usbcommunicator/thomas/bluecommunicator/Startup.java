@@ -4,12 +4,16 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +37,8 @@ public class Startup extends AppCompatActivity {
 
     private Button btnConnect, btnDisconnect;
     private ArrayAdapter adaper;
+    private TextView tvStatus;
+
     public ListView deviceView;
     String[] globalDeviceArrayList;
 
@@ -43,6 +49,8 @@ public class Startup extends AppCompatActivity {
 
     //Selected item identification from listview
     private String lastItem = "";
+
+    private Toolbar mToolbar;
 
 
 
@@ -55,8 +63,12 @@ public class Startup extends AppCompatActivity {
         deviceView = (ListView)findViewById(R.id.list_item_deviceList);
         setViewItemListener();
 
+        mToolbar = (Toolbar)findViewById(R.id.customToolbar);
+        setSupportActionBar(mToolbar);
+
         btnConnect = (Button)findViewById(R.id.btnConnect);
         btnDisconnect = (Button)findViewById(R.id.btnDisconnect);
+        tvStatus = (TextView)findViewById(R.id.tvStatus);
 
         smoothBluetooth = new SmoothBluetooth(this);
         smoothBluetooth.setListener(mListener);
@@ -74,6 +86,30 @@ public class Startup extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_constraints, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_user) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     //Setup Listener for Item to choose from
     private void setViewItemListener(){
@@ -109,7 +145,7 @@ public class Startup extends AppCompatActivity {
         public void onConnected(Device device) {
             //called when connected to particular device
             Log.i(TAG, "Connection succeeded to device : " + device.getName());
-
+            tvStatus.setText("Status : connected");
 
         }
 
