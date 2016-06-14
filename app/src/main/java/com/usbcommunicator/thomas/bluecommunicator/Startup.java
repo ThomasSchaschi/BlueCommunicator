@@ -38,7 +38,7 @@ public class Startup extends AppCompatActivity {
     public SmoothBluetooth smoothBluetooth;
 
     private Button btnConnect, btnDisconnect;
-    public Button btnSwitchPerspective;
+
     private ArrayAdapter adaper;
     private TextView tvStatus;
 
@@ -75,8 +75,7 @@ public class Startup extends AppCompatActivity {
         btnDisconnect = (Button)findViewById(R.id.btnDisconnect);
         btnDisconnect.setEnabled(false);
         tvStatus = (TextView)findViewById(R.id.tvStatus);
-        btnSwitchPerspective = (Button)findViewById(R.id.btnSwitchPerspective);
-        btnSwitchPerspective.setOnClickListener(genericButtonListener);
+
 
         smoothBluetooth = new SmoothBluetooth(this);
         smoothBluetooth.setListener(mListener);
@@ -112,7 +111,9 @@ public class Startup extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_user) {
+        if (id == R.id.btnSwitchPerspective) {
+            //Switch perspektive
+            Log.i(TAG, "Switching perspektive to send mode.");
             return true;
         }
 
@@ -266,9 +267,7 @@ public class Startup extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String TAG = "GenericButtonListener - ";
-            if(v.getId() == btnSwitchPerspective.getId()){
-                //Switch perspektive
-            }
+
         }
     };
 
