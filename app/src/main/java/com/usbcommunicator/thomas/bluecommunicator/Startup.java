@@ -2,6 +2,8 @@ package com.usbcommunicator.thomas.bluecommunicator;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +38,7 @@ public class Startup extends AppCompatActivity {
     public SmoothBluetooth smoothBluetooth;
 
     private Button btnConnect, btnDisconnect;
+    public Button btnSwitchPerspective;
     private ArrayAdapter adaper;
     private TextView tvStatus;
 
@@ -49,8 +52,10 @@ public class Startup extends AppCompatActivity {
 
     //Selected item identification from listview
     private String lastItem = "";
+    private View lastColored = null;
 
     private Toolbar mToolbar;
+
 
 
 
@@ -68,7 +73,10 @@ public class Startup extends AppCompatActivity {
 
         btnConnect = (Button)findViewById(R.id.btnConnect);
         btnDisconnect = (Button)findViewById(R.id.btnDisconnect);
+        btnDisconnect.setEnabled(false);
         tvStatus = (TextView)findViewById(R.id.tvStatus);
+        btnSwitchPerspective = (Button)findViewById(R.id.btnSwitchPerspective);
+        btnSwitchPerspective.setOnClickListener(genericButtonListener);
 
         smoothBluetooth = new SmoothBluetooth(this);
         smoothBluetooth.setListener(mListener);
@@ -83,6 +91,8 @@ public class Startup extends AppCompatActivity {
 
 
         //Finished Initialization
+
+
 
 
     }
@@ -116,9 +126,19 @@ public class Startup extends AppCompatActivity {
         deviceView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItemFromList = (String)deviceView.getItemAtPosition(position);
-                Log.i(TAG, "ReceivedItem : " +  selectedItemFromList);
+                String selectedItemFromList = (String) deviceView.getItemAtPosition(position);
+                Log.i(TAG, "ReceivedItem : " + selectedItemFromList);
                 lastItem = selectedItemFromList;
+
+                //#D6D6D6
+                if (lastColored == null) {
+                    view.setBackgroundColor(Color.parseColor("#D6D6D6"));
+                    lastColored = view;
+                }else{
+                    lastColored.setBackgroundColor(Color.TRANSPARENT);
+                    lastColored = view;
+                    view.setBackgroundColor(Color.parseColor("#D6D6D6"));
+                }
             }
         });
     }
@@ -146,12 +166,15 @@ public class Startup extends AppCompatActivity {
             //called when connected to particular device
             Log.i(TAG, "Connection succeeded to device : " + device.getName());
             tvStatus.setText("Status : connected");
+            btnConnect.setEnabled(false);
+            btnDisconnect.setEnabled(true);
 
         }
 
         @Override
         public void onDisconnected() {
             //called when disconnected from device
+            btnConnect.setEnabled(true);
         }
 
         @Override
@@ -243,6 +266,9 @@ public class Startup extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String TAG = "GenericButtonListener - ";
+            if(v.getId() == btnSwitchPerspective.getId()){
+                //Switch perspektive
+            }
         }
     };
 
