@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -160,6 +161,7 @@ public class Startup extends AppCompatActivity {
         public void onConnecting(Device device) {
             //called when connecting to particular device
             Log.i(TAG, "Connection attempt to device : " + device.getName());
+            displayShortToast("Attempting connection...");
         }
 
         @Override
@@ -169,6 +171,7 @@ public class Startup extends AppCompatActivity {
             tvStatus.setText("Status : connected");
             btnConnect.setEnabled(false);
             btnDisconnect.setEnabled(true);
+            displayShortToast("Connection succeeded.");
 
         }
 
@@ -182,6 +185,8 @@ public class Startup extends AppCompatActivity {
         public void onConnectionFailed(Device device) {
             //called when connection failed to particular device
             Log.i(TAG, "Connection failed to device : " + device.getName());
+            displayShortToast("Connection failed.");
+
         }
 
         @Override
@@ -270,6 +275,11 @@ public class Startup extends AppCompatActivity {
 
         }
     };
+
+    public void displayShortToast(String message){
+        Toast.makeText(startUpContex, message, Toast.LENGTH_LONG).show();
+    }
+
 
     @Override
     protected void onDestroy() {
