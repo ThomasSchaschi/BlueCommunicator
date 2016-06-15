@@ -2,6 +2,7 @@ package com.usbcommunicator.thomas.bluecommunicator;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -115,6 +116,9 @@ public class Startup extends AppCompatActivity {
         if (id == R.id.btnSwitchPerspective) {
             //Switch perspektive
             Log.i(TAG, "Switching perspektive to send mode.");
+
+            startChildTerminal();
+
             return true;
         }
 
@@ -122,6 +126,10 @@ public class Startup extends AppCompatActivity {
     }
 
 
+    private void startChildTerminal(){
+        Intent terminalIntent = new Intent(this, Terminal.class);
+        startActivity(terminalIntent);
+    }
 
     //Setup Listener for Item to choose from
     private void setViewItemListener(){
@@ -172,6 +180,7 @@ public class Startup extends AppCompatActivity {
             btnConnect.setEnabled(false);
             btnDisconnect.setEnabled(true);
             displayShortToast("Connection succeeded.");
+            Connection.connectionState = true;
 
         }
 
@@ -286,6 +295,9 @@ public class Startup extends AppCompatActivity {
         super.onDestroy();
         smoothBluetooth.stop();
     }
+
+
+
 }
 
 

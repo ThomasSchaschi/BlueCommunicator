@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:weightSum="1"
+    >
+
+    <include
+        android:id="@+id/customToolbar"
+        layout="@layout/customtoolbar"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scroller"
+        android:layout_weight="0.9"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=""
+            android:textColor="#00FF51"
+            android:id="@+id/tvConsoleAppearance" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_weight="0.10"
+        >
+
+        <EditText
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/etTerminalInput"
+            android:layout_weight="0.9"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="#00FF51"
+            />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Push!"
+            android:id="@+id/btnPush"
+            android:layout_weight="0.1"
+            android:gravity="center_horizontal|center_vertical"
+
+            />
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
