@@ -76,6 +76,7 @@ public class Startup extends AppCompatActivity {
         btnConnect = (Button)findViewById(R.id.btnConnect);
         btnDisconnect = (Button)findViewById(R.id.btnDisconnect);
         btnDisconnect.setEnabled(false);
+        btnDisconnect.setOnClickListener(genericButtonListener);
         tvStatus = (TextView)findViewById(R.id.tvStatus);
 
 
@@ -158,11 +159,13 @@ public class Startup extends AppCompatActivity {
         @Override
         public void onBluetoothNotSupported() {
             //device does not support bluetooth
+            displayShortToast("Sorry - This device does not support bluetooth.");
         }
 
         @Override
         public void onBluetoothNotEnabled() {
             //bluetooth is disabled, probably call Intent request to enable bluetooth
+            displayShortToast("Would you mind considering enabling bluetooth on your device?");
         }
 
         @Override
@@ -181,6 +184,7 @@ public class Startup extends AppCompatActivity {
             btnDisconnect.setEnabled(true);
             displayShortToast("Connection succeeded.");
             Connection.connectionState = true;
+            Connection.smoothBluetooth = smoothBluetooth;
 
         }
 
@@ -188,6 +192,10 @@ public class Startup extends AppCompatActivity {
         public void onDisconnected() {
             //called when disconnected from device
             btnConnect.setEnabled(true);
+            tvStatus.setText("Status : disconnected");
+            displayShortToast("Disconnected.");
+            Connection.connectionState = false;
+            Connection.smoothBluetooth = null;
         }
 
         @Override
@@ -211,6 +219,7 @@ public class Startup extends AppCompatActivity {
         @Override
         public void onNoDevicesFound() {
             //called when no devices found
+            displayShortToast("Sorry - No devices found.");
         }
 
         @Override
@@ -281,6 +290,10 @@ public class Startup extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String TAG = "GenericButtonListener - ";
+            if(v.getId() == btnDisconnect.getId()){
+                smoothBluetooth.disconnect();
+                Connection.connectionState = false;
+            }
 
         }
     };

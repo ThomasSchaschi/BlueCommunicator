@@ -100,6 +100,8 @@ public class Terminal extends AppCompatActivity {
                     });
 
                     etTerminalInput.setText("");
+                    Connection.smoothBluetooth.send(command.getBytes());
+
                 }else{
                     tvTerminal.append(CONSOLEPREFIX + "" + "No connection to device!" + "\n");
                     etTerminalInput.setText("");
