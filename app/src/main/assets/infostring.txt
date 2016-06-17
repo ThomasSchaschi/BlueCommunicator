@@ -1,0 +1,34 @@
+ Welcome to BlueCommunicator!
+
+ - a flexible terminal bluetooth trans-
+ mission application.
+
+ How it works:
+ 1. Device identifies whether bluetooth
+ is activated or even supported on the
+ device itself. If that is not the case,
+ no devices will be identified by the
+ application.
+
+2. When devices are discovered,
+ (!Note that only devices which have
+ been paired previously can be detected!)
+ a connection can be established.
+
+3. Afterwards the user is ment to switch
+ into terminal mode were he (or "she"
+ for political correctness)can send
+ whichever commands he/she wants to
+ the paired device. - also, this is
+ where received messages are displayed.
+
+ Please do not leave this mode until
+ you have completed your operations.
+
+
+ -UPDATES will follow soon!
+
+ -This app was created by
+ Thomas Schaschinger
+
+ thomas.schaschinger@gmail.com

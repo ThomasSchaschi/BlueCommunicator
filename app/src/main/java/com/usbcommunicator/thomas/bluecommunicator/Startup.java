@@ -43,7 +43,7 @@ public class Startup extends AppCompatActivity {
 
     public SmoothBluetooth smoothBluetooth;
 
-    private Button btnConnect, btnDisconnect;
+    private Button btnConnect, btnDisconnect, btnOut;
 
     private ArrayAdapter adaper;
     private TextView tvStatus, tvUserInfo;
@@ -82,8 +82,6 @@ public class Startup extends AppCompatActivity {
         btnDisconnect.setEnabled(false);
         btnDisconnect.setOnClickListener(genericButtonListener);
         tvStatus = (TextView)findViewById(R.id.tvStatus);
-        tvUserInfo = (TextView)findViewById(R.id.tvInfoText);
-
 
 
         smoothBluetooth = new SmoothBluetooth(this);
@@ -323,14 +321,23 @@ public class Startup extends AppCompatActivity {
     private void showInfo(){
         View view = getLayoutInflater().inflate( R.layout.showinfo, null);
 
-        loadManual();
+        tvUserInfo = (TextView)view.findViewById(R.id.tvInfoText);
+        tvUserInfo.setText(loadManual());
+        btnOut = (Button)view.findViewById(R.id.btnOut);
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder( this );
-        dialog.setView(view);
-        dialog.setTitle("Information");
-        dialog.show();
+        final AlertDialog alertDialog = dialog.create();
+        alertDialog.setView(view);
+        alertDialog.setTitle("Information");
+        alertDialog.show();
 
-
+        btnOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "About to close information site.");
+                alertDialog.cancel();
+            }
+        });
     }
 
     private String loadManual(){
