@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +46,7 @@ public class Startup extends AppCompatActivity {
     private Button btnConnect, btnDisconnect;
 
     private ArrayAdapter adaper;
-    private TextView tvStatus;
+    private TextView tvStatus, tvUserInfo;
 
     public ListView deviceView;
     String[] globalDeviceArrayList;
@@ -78,6 +82,8 @@ public class Startup extends AppCompatActivity {
         btnDisconnect.setEnabled(false);
         btnDisconnect.setOnClickListener(genericButtonListener);
         tvStatus = (TextView)findViewById(R.id.tvStatus);
+        tvUserInfo = (TextView)findViewById(R.id.tvInfoText);
+
 
 
         smoothBluetooth = new SmoothBluetooth(this);
@@ -121,6 +127,11 @@ public class Startup extends AppCompatActivity {
             startChildTerminal();
 
             return true;
+        }else if(id == R.id.btnAbout){
+
+            Log.i(TAG, "Displaying info box.");
+
+            showInfo();
         }
 
         return super.onOptionsItemSelected(item);
@@ -309,7 +320,38 @@ public class Startup extends AppCompatActivity {
         smoothBluetooth.stop();
     }
 
+    private void showInfo(){
+        View view = getLayoutInflater().inflate( R.layout.showinfo, null);
 
+        loadManual();
+
+        final AlertDialog.Builder dialog = new AlertDialog.Builder( this );
+        dialog.setView(view);
+        dialog.setTitle("Information");
+        dialog.show();
+
+
+    }
+
+    private String loadManual(){
+        BufferedReader bufferedReader = null;
+        StringBuilder stringBuilder = null;
+        try{
+            bufferedReader = new BufferedReader(new InputStreamReader(getAssets().open("infostring.txt")));
+            stringBuilder = new StringBuilder();
+            String line = "";
+            while((line = bufferedReader.readLine()) != null){
+                stringBuilder.append(line);
+                stringBuilder.append('\n');
+            }
+            Log.i(TAG, "File read successfully!");
+            bufferedReader.close();
+            return stringBuilder.toString();
+        }catch(Exception e){
+            Log.i(TAG, "Error attempting to read the manual - file.");
+        }
+        return null;
+    }
 
 }
 
